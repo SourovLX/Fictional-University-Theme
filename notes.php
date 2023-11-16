@@ -14,6 +14,8 @@
 
 	the_content() // gets content of the post
 
+	the_post_thumbnail("Professor Portrait"); // gets the featured image, you can add a parameter to call a custom size of the image
+
 	// FYI: every function starting with "the_" echos the value and every function starting with "get_" stores the value in memory which can "echoe"d or used else where
 
 	get_the_ID(); // gets current post ID
@@ -38,6 +40,23 @@
 		"theme_location" => "headerMenuLocation"
 	)); // calling the menu in the correct location
 
+	WP_Query(array(
+		"post_type" => "professor",
+		"posts_per_page" => -1,
+		"orderby" => "title",
+		"order" => "ASC",
+		"meta_query" => array(
+			array(
+				"key" => "related_programs",
+				"compare" => "LIKE",
+				"value" => '"' . get_the_ID() . '"'
+			)
+		))
+	) // Custom queries the the whole wordpress to get desired post type showing
+
+	wp_reset_postdata(); // resets wordpress post data after a custom query to query again.
+
+	date("Ymd"); // php default date gettign function or method.
 	
 
 ?>
