@@ -1,5 +1,32 @@
 <?php 
 
+function pageBanner($args = NULL) {
+	// php logic
+	if (!isset($args["title"])) {
+		$args["title"] = get_the_title();
+	}
+	if(!isset($args["subtitle"])) {
+		$args["subtitle"] = get_field("page_banner_subtitle");
+	}
+	if(!isset($args["photo"])) {
+		if(get_field("page_banner_background_image") AND !is_archive() AND !is_home()) {
+			$args["photo"] = get_field("page_banner_background_image")["sizes"]["Page Banner"];
+		} else {
+			$args["photo"] = "https://images.pexels.com/photos/19036675/pexels-photo-19036675/free-photo-of-interior-of-rijksmueum-research-library.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+		}
+	}
+	?>
+	<div class="page-banner">
+	<div class="page-banner__bg-image" style="background-image: url(<?php echo $args["photo"]; ?>"></div>
+		<div class="page-banner__content container container--narrow">
+			<h1 class="page-banner__title"><?php echo $args["title"] ?></h1>
+			<div class="page-banner__intro">
+				<p><?php echo $args["subtitle"]; ?></p>
+			</div>
+		</div>
+    </div>
+<?php }
+
 function university_files() {
 	wp_enqueue_style("university_main_styles", get_theme_file_uri("/build/style-index.css"));
 	wp_enqueue_style("university_extra_styles", get_theme_file_uri("/build/index.css"));
