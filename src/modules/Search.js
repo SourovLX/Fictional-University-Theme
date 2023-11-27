@@ -42,28 +42,50 @@ class Search {
     }
 
     getResults() {
-        $.getJSON(
-            universityData.root_url +
-                "/wp-json/wp/v2/posts?search=" +
-                this.searchField.val(),
-            posts => {
+        $.when(
+            $.getJSON(
+                universityData.root_url +
+                    "/wp-json/wp/v2/posts?search=" +
+                    this.searchField.val()
+            ),
+
+            $.getJSON(
+                universityData.root_url +
+                    "/wp-json/wp/v2/pages?search=" +
+                    this.searchField.val()
+            )
+        ).then(
+            (posts, pages) => {
+                let combinedResults = posts[0].concat(pages[0]);
+
                 this.resultsDiv.html(`
 					<h2 class="search-overlay__section-title"> General Information<h2>
 					${
-                        posts.length
+                        combinedResults.length
                             ? "<ul class='link-list min-list'>"
                             : "<p>No general information found.</p>"
                     }
-						${posts
+						${combinedResults
                             .map(
                                 item =>
-                                    `<li><a href="${item.link}">${item.title.rendered}</a></li>`
+                                    `<li><a href="${item.link}">${
+                                        item.title.rendered
+                                    }</a>${
+                                        item.type === "post"
+                                            ? ` by ${item.authorName}`
+                                            : ""
+                                    }</li>`
                             )
                             .join("")}
-					${posts.length ? "</ul>" : ""}
+					${combinedResults.length ? "</ul>" : ""}
 				`);
 
                 this.isSpinnerVisible = false;
+            },
+            () => {
+                this.resultsDiv.html(
+                    "<p>Unexpected Error. Please try again.</p>"
+                );
             }
         );
     }
