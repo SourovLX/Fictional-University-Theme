@@ -162,6 +162,8 @@ class Search {
         this.searchField.val("");
         setTimeout(() => this.searchField.focus(), 301);
         this.isOverlayOpen = true;
+        // preventing default behavior of the anchor tag
+        return false;
     }
 
     closeOverlay() {

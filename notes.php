@@ -57,6 +57,14 @@
 	wp_reset_postdata(); // resets wordpress post data after a custom query to query again.
 
 	date("Ymd"); // php default date gettign function or method.
+
+	site_url(); // returns url of the site
+
+	esc_url(site_url("/")); // returns a clean url using this is the best practice
+
+	sanitize_url(); // cleans a url which is sent to the database
+	
+	sanitize_text_field(); // cleans text fields (forms)
 	
 
 ?>
