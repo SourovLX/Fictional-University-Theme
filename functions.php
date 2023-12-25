@@ -1,4 +1,6 @@
 <?php 
+
+require get_theme_file_path("/inc/like-route.php");
 require get_theme_file_path("/inc/search-route.php");
 
 function university_custom_rest() {
@@ -159,4 +161,12 @@ function makeNotePrivate($data, $postarr) {
 	}
 
 	return $data;
+}
+
+add_filter("ai1wm_exlude_content_from_export", "exportIgnoreList");
+
+function exportIgnoreList($filters) {
+	$exclude_filters[] = "themes/fictional-university-theme/node_modules";
+
+	retun $exclude_filters;
 }
