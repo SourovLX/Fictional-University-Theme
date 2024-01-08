@@ -163,10 +163,10 @@ function makeNotePrivate($data, $postarr) {
 	return $data;
 }
 
-add_filter("ai1wm_exlude_content_from_export", "exportIgnoreList");
+// add_filter("ai1wm_exlude_content_from_export", "exportIgnoreList");
 
-function exportIgnoreList($filters) {
-	$exclude_filters[] = "themes/fictional-university-theme/node_modules";
+// function exportIgnoreList($filters) {
+// 	$exclude_filters[] = "themes/fictional-university-theme/node_modules";
 
-	retun $exclude_filters;
-}
+// 	retun $exclude_filters;
+// }
